@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+    <info organisation="ws" module="chess.server"/>
+    <dependencies>
+        <dependency org="org.projectlombok" name="lombok" rev="1.18.8"/>
+    </dependencies>
+</ivy-module>

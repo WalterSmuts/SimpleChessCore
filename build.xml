@@ -1,0 +1,38 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="SimpleChessCore" basedir="." default="jar">
+
+    <property name="src.dir"     value="src"/>
+    <property name="build.dir"   value="build"/>
+    <property name="lib.dir"   value="lib"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir"     value="${build.dir}/jar"/>
+    <property name="main-class"  value="ws.chess.RunSimpleChessCore"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${lib.dir}"/>
+    </target>
+
+    <target name="resolve">
+        <ivy:retrieve/>
+        <ivy:cachepath pathid="lib.path"/>
+    </target>
+
+    <target name="compile" depends="resolve">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="lib.path"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Class-Path" value="lib/*.jar"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean-build" depends="clean,jar"/>
+
+</project>
