@@ -40,7 +40,10 @@ public class Board {
         if (!(move.getOriginal() instanceof Pawn)) return true;
         Pawn pawn = (Pawn)move.getDestination();
         Piece destination = board[move.getDestination().getX()][move.getDestination().getY()];
-        return  (pawn.isAttackPawn() ^ destination == null);
+        int dir = pawn.getColor().equals(WHITE) ? 1 : -1;
+        Piece target = board[move.getDestination().getX()][move.getDestination().getY() - dir];
+        return (pawn.isAttackPawn() ^ destination == null) ||
+               (pawn.isAttackPawn() && target instanceof Pawn && ((Pawn)target).isAbleToBeTakenEnPassant());
     }
 
     boolean isValidDestination(Move move) {
@@ -87,6 +90,13 @@ public class Board {
         newPieces.add(move.getDestination());
         newBoard[move.getDestination().getX()][move.getDestination().getY()] = move.getDestination();
         newBoard[move.getOriginal().getX()][move.getOriginal().getY()] = null;
+        if (move.getDestination() instanceof Pawn && ((Pawn) move.getDestination()).isAttackPawn() &&
+            board[move.getDestination().getX()][move.getDestination().getY()] == null) {
+            int dir = move.getDestination().getColor().equals(WHITE) ? 1 : -1;
+            Piece target = newBoard[move.getDestination().getX()][move.getDestination().getY() - dir];
+            newPieces.remove(target);
+            newBoard[target.getX()][target.getY()] = null;
+        }
         return new Board(newPieces, newBoard, newNext);
     }
 

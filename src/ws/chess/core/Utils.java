@@ -14,8 +14,8 @@ public class Utils {
         Piece[][] board = new Piece[8][8];
 
         for (int i = 0; i < 8 ; i++) {
-            pieces.add(new Pawn(WHITE, i, 1, false, false));
-            pieces.add(new Pawn(BLACK, i, 6, false, false));
+            pieces.add(new Pawn(WHITE, i, 1, false, false, false));
+            pieces.add(new Pawn(BLACK, i, 6, false, false, false));
         }
 
         pieces.add(new Rook(WHITE, 0, 0));
