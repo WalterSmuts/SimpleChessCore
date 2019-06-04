@@ -19,6 +19,6 @@ public class Rook extends Piece {
     }
 
     public Piece clone() {
-        return new Rook(this.getColor(), this.getX(), this.getY());
+        return new Rook(this.color, this.x, this.y);
     }
 }

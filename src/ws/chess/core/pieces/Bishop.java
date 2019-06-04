@@ -19,6 +19,6 @@ public class Bishop extends Piece {
     }
 
     public Piece clone() {
-        return new Bishop(this.getColor(), this.getX(), this.getY());
+        return new Bishop(this.color, this.x, this.y);
     }
 }

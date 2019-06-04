@@ -35,7 +35,7 @@ public class Pawn extends Piece {
     private Move getMove(int x, int y, boolean isAttackPawn, boolean ableToBeTakenEnPassant) {
         return Move.builder()
             .original(this)
-            .destination(new Pawn(this.getColor(), this.getX() + x, this.getY() + y, isAttackPawn, true, ableToBeTakenEnPassant))
+            .destination(new Pawn(this.color, this.x + x, this.y + y, isAttackPawn, true, ableToBeTakenEnPassant))
             .build();
     }
 
@@ -44,6 +44,6 @@ public class Pawn extends Piece {
     }
 
     public Piece clone() {
-        return new Pawn(this.getColor(), this.getX(), this.getY(), false, this.hasMoved, false);
+        return new Pawn(this.color, this.x, this.y, false, this.hasMoved, false);
     }
 }

@@ -29,6 +29,6 @@ public class Knight extends Piece {
     }
 
     public Piece clone() {
-        return new Knight(this.getColor(), this.getX(), this.getY());
+        return new Knight(this.color, this.x, this.y);
     }
 }

@@ -30,6 +30,6 @@ public class King extends Piece {
     }
 
     public Piece clone() {
-        return new King(this.getColor(), this.getX(), this.getY());
+        return new King(this.color, this.x, this.y);
     }
 }

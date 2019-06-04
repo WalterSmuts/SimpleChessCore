@@ -1,7 +1,8 @@
 package ws.chess.core.pieces;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import ws.chess.core.Move;
 
 import java.util.ArrayList;
@@ -10,12 +11,15 @@ import java.util.stream.Collectors;
 
 import static ws.chess.core.pieces.Piece.Color.WHITE;
 
-@Data
 @AllArgsConstructor
+@EqualsAndHashCode
 public abstract class Piece {
-    private Color color;
-    private int x;
-    private int y;
+    @Getter
+    protected Color color;
+    @Getter
+    protected int x;
+    @Getter
+    protected int y;
 
     abstract List<Move> getUniqueMovePattern();
     abstract String getSymbol();
@@ -55,8 +59,8 @@ public abstract class Piece {
 
     protected Move move(int x, int y) {
         Piece clone = this.clone();
-        clone.setX(this.getX() + x);
-        clone.setY(this.getY() + y);
+        clone.x = this.getX() + x;
+        clone.y = this.getY() + y;
         return Move.builder()
             .original(this)
             .destination(clone)

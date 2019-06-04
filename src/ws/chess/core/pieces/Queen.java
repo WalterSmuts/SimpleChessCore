@@ -21,6 +21,6 @@ public class Queen extends Piece {
     }
 
     public Piece clone() {
-        return new Queen(this.getColor(), this.getX(), this.getY());
+        return new Queen(this.color, this.x, this.y);
     }
 }
