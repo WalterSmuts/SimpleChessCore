@@ -18,23 +18,23 @@ public class Utils {
             pieces.add(new Pawn(BLACK, i, 6, false, false, false));
         }
 
-        pieces.add(new Rook(WHITE, 0, 0));
+        pieces.add(new Rook(WHITE, 0, 0, false));
         pieces.add(new Bishop(WHITE, 1, 0));
         pieces.add(new Knight(WHITE, 2, 0));
         pieces.add(new Queen(WHITE, 3, 0));
-        pieces.add(new King(WHITE, 4, 0));
+        pieces.add(new King(WHITE, 4, 0, false, false));
         pieces.add(new Knight(WHITE, 5, 0));
         pieces.add(new Bishop(WHITE, 6, 0));
-        pieces.add(new Rook(WHITE, 7, 0));
+        pieces.add(new Rook(WHITE, 7, 0, false));
 
-        pieces.add(new Rook(BLACK, 0, 7));
+        pieces.add(new Rook(BLACK, 0, 7, false));
         pieces.add(new Bishop(BLACK, 1, 7));
         pieces.add(new Knight(BLACK, 2, 7));
         pieces.add(new Queen(BLACK, 3, 7));
-        pieces.add(new King(BLACK, 4, 7));
+        pieces.add(new King(BLACK, 4, 7, false, false));
         pieces.add(new Knight(BLACK, 5, 7));
         pieces.add(new Bishop(BLACK, 6, 7));
-        pieces.add(new Rook(BLACK, 7, 7));
+        pieces.add(new Rook(BLACK, 7, 7, false));
 
         pieces.forEach(piece -> board[piece.getX()][piece.getY()] = piece);
         return new Board(pieces, board, WHITE);

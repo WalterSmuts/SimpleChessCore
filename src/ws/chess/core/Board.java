@@ -1,10 +1,7 @@
 package ws.chess.core;
 
 import lombok.AllArgsConstructor;
-import ws.chess.core.pieces.King;
-import ws.chess.core.pieces.Knight;
-import ws.chess.core.pieces.Pawn;
-import ws.chess.core.pieces.Piece;
+import ws.chess.core.pieces.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +94,7 @@ public class Board {
             .anyMatch(this::consumesKing);
     }
 
-    boolean consumesKing(Move move) {
+    public boolean consumesKing(Move move) {
         return board[move.getDestination().getX()][move.getDestination().getY()] instanceof King;
     }
 

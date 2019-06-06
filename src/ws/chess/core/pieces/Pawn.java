@@ -42,7 +42,6 @@ public class Pawn extends Piece {
 
     @Override
     boolean uniquePieceFilter(Move move, Board board) {
-        if (!(move.getOriginal() instanceof Pawn)) return true;
         Pawn pawn = (Pawn)move.getDestination();
         Piece destination = board.getPiece(move.getDestination().getX(), move.getDestination().getY());
         int dir = pawn.getColor().equals(WHITE) ? 1 : -1;
