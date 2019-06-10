@@ -23,11 +23,12 @@ public class Board {
     List<Move> getPossibleMoves(Color color) {
         return pieces.stream()
             .filter(piece -> piece.getColor().equals(color))
-            .flatMap(piece -> piece.getMovePattern().stream())
-            .filter(this::isValidDestination)
-            .filter(this::hasCleanPath)
-            .filter(this::pawnAttackFilter)
+            .flatMap(piece -> piece.getPossibleMoves(this).stream())
             .collect(Collectors.toList());
+    }
+
+    public Piece getPiece(int x, int y) {
+        return board[x][y];
     }
 
     public List<Move> getAvailableMoves() {
@@ -36,22 +37,12 @@ public class Board {
             .collect(Collectors.toList());
     }
 
-    boolean pawnAttackFilter(Move move) {
-        if (!(move.getOriginal() instanceof Pawn)) return true;
-        Pawn pawn = (Pawn)move.getDestination();
-        Piece destination = board[move.getDestination().getX()][move.getDestination().getY()];
-        int dir = pawn.getColor().equals(WHITE) ? 1 : -1;
-        Piece target = board[move.getDestination().getX()][move.getDestination().getY() - dir];
-        return (pawn.isAttackPawn() ^ destination == null) ||
-               (pawn.isAttackPawn() && target instanceof Pawn && ((Pawn)target).isAbleToBeTakenEnPassant());
-    }
-
-    boolean isValidDestination(Move move) {
+    public boolean isValidDestination(Move move) {
         Piece destination = board[move.getDestination().getX()][move.getDestination().getY()];
         return (destination == null) || !destination.getColor().equals(move.getOriginal().getColor());
     }
 
-    boolean hasCleanPath(Move move) {
+    public boolean hasCleanPath(Move move) {
         // There has to be a simpler way to check this!!!
         if (move.getOriginal() instanceof Knight) return true;
         int ax = move.getOriginal().getX();
@@ -109,6 +100,12 @@ public class Board {
     boolean consumesKing(Move move) {
         return board[move.getDestination().getX()][move.getDestination().getY()] instanceof King;
     }
+
+    public static boolean onBoard(Move move) {
+        return (move.getDestination().getY() < 8) && (move.getDestination().getY() >= 0)
+            && (move.getDestination().getX() < 8) && (move.getDestination().getX() >= 0);
+    }
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder(String.format("            %s's turn...%n", next));

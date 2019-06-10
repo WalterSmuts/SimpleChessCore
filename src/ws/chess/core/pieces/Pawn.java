@@ -1,6 +1,7 @@
 package ws.chess.core.pieces;
 
 import lombok.Getter;
+import ws.chess.core.Board;
 import ws.chess.core.Move;
 
 import java.util.ArrayList;
@@ -38,6 +39,18 @@ public class Pawn extends Piece {
             .destination(new Pawn(this.color, this.x + x, this.y + y, isAttackPawn, true, ableToBeTakenEnPassant))
             .build();
     }
+
+    @Override
+    boolean uniquePieceFilter(Move move, Board board) {
+        if (!(move.getOriginal() instanceof Pawn)) return true;
+        Pawn pawn = (Pawn)move.getDestination();
+        Piece destination = board.getPiece(move.getDestination().getX(), move.getDestination().getY());
+        int dir = pawn.getColor().equals(WHITE) ? 1 : -1;
+        Piece target = board.getPiece(move.getDestination().getX(), move.getDestination().getY() - dir);
+        return (pawn.isAttackPawn() ^ destination == null) ||
+            (pawn.isAttackPawn() && target instanceof Pawn && ((Pawn)target).isAbleToBeTakenEnPassant());
+    }
+
 
     String getSymbol() {
         return "P";

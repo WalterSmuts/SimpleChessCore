@@ -3,6 +3,7 @@ package ws.chess.core.pieces;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import ws.chess.core.Board;
 import ws.chess.core.Move;
 
 import java.util.ArrayList;
@@ -24,9 +25,16 @@ public abstract class Piece {
     abstract List<Move> getUniqueMovePattern();
     abstract String getSymbol();
 
-    public List<Move> getMovePattern() {
+    boolean uniquePieceFilter(Move move, Board board){
+        return true;
+    }
+
+    public List<Move> getPossibleMoves(Board board) {
         return getUniqueMovePattern().stream()
-            .filter(this::onBoard)
+            .filter(Board::onBoard)
+            .filter(board::isValidDestination)
+            .filter(board::hasCleanPath)
+            .filter(move -> this.uniquePieceFilter(move, board))
             .collect(Collectors.toList());
     }
 
@@ -50,11 +58,6 @@ public abstract class Piece {
             moves.add(move(-i, +i));
         }
         return moves;
-    }
-
-    private boolean onBoard(Move move) {
-        return (move.getDestination().getY() < 8) && (move.getDestination().getY() >= 0)
-            && (move.getDestination().getX() < 8) && (move.getDestination().getX() >= 0);
     }
 
     protected Move move(int x, int y) {
